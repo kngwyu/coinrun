@@ -7,7 +7,6 @@ On import, this will attempt to build the shared library.
 import os
 import atexit
 import random
-import sys
 from ctypes import c_int, c_char_p, c_float, c_bool
 
 import gym
@@ -33,29 +32,8 @@ game_versions = {
     'maze': 1002,
 }
 
-def build():
-    lrank, _lsize = mpi_util.get_local_rank_size(MPI.COMM_WORLD)
-    if lrank == 0:
-        dirname = os.path.dirname(__file__)
-        if len(dirname):
-            make_cmd = "QT_SELECT=5 make -C %s" % dirname
-        else:
-            make_cmd = "QT_SELECT=5 make"
 
-        r = os.system(make_cmd)
-        if r != 0:
-            logger.error('coinrun: make failed')
-            sys.exit(1)
-    MPI.COMM_WORLD.barrier()
-
-build()
-
-if DEBUG:
-    lib_path = '.build-debug/coinrun_cpp_d'
-else:
-    lib_path = '.build-release/coinrun_cpp'
-
-lib = npct.load_library(lib_path, os.path.dirname(__file__))
+lib = npct.load_library('cpplib.cpython-36m-x86_64-linux-gnu.so', os.path.dirname(__file__))
 lib.init.argtypes = [c_int]
 lib.get_NUM_ACTIONS.restype = c_int
 lib.get_RES_W.restype = c_int
@@ -88,6 +66,7 @@ lib.vec_wait.argtypes = [
 
 already_inited = False
 
+
 def init_args_and_threads(cpu_count=4,
                           monitor_csv_policy='all',
                           rand_seed=None):
@@ -118,12 +97,14 @@ def init_args_and_threads(cpu_count=4,
     lib.init(cpu_count)
     already_inited = True
 
+
 @atexit.register
 def shutdown():
     global already_inited
     if not already_inited:
         return
     lib.shutdown()
+
 
 class CoinRunVecEnv(VecEnv):
     """
@@ -211,6 +192,7 @@ class CoinRunVecEnv(VecEnv):
             obs_frames = np.mean(obs_frames, axis=-1).astype(np.uint8)[...,None]
 
         return obs_frames, self.buf_rew, self.buf_done, self.dummy_info
+
 
 def make(env_id, num_envs, **kwargs):
     assert env_id in game_versions, 'cannot find environment "%s", maybe you mean one of %s' % (env_id, list(game_versions.keys()))

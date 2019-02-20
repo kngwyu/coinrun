@@ -1,5 +1,4 @@
 __pycache__/
 .build*/
-.generated/
 *.egg-info/
 saved_models/

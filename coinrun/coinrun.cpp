@@ -7,6 +7,7 @@ It exposes a C interface similar to that of a VecEnv.
 Also includes a mode that creates a window you can interact with using the keyboard.
 */
 
+#include <Python.h>
 #include <QtCore/QMutexLocker>
 #include <QtCore/QWaitCondition>
 #include <QtWidgets/QApplication>

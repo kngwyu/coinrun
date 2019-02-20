@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "97d9d269b44181b5927d442885670d6d7bc600df6c581c3027aa199edb3f77c7"
+            "sha256": "dfe79328c531142b5884a9af621b52250e2397e7cfc23044f9ef50c444bd7d15"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -32,10 +32,6 @@
                 "sha256:fc323ffcaeaed0e0a02bf4d117757b98aed530d9ed4531e3e15460124c106691"
             ],
             "version": "==3.0.4"
-        },
-        "coinrun": {
-            "editable": true,
-            "path": "."
         },
         "future": {
             "hashes": [
@@ -176,5 +172,14 @@
             "version": "==1.24.1"
         }
     },
-    "develop": {}
+    "develop": {
+        "pkgconfig": {
+            "hashes": [
+                "sha256:048c3b457da7b6f686b647ab10bf09e2250e4c50acfe6f215398a8b5e6fcdb52",
+                "sha256:3eb03a6345d4916489d3433f60e6d044a21f50e1d86fb611a52fd28061582065"
+            ],
+            "index": "pypi",
+            "version": "==1.4.0"
+        }
+    }
 }

@@ -16,7 +16,7 @@ ifeq ($(UNAME),Darwin)
     MOC =/usr/local/opt/qt5/bin/moc
     export PKG_CONFIG_PATH=/usr/local/opt/qt5/lib/pkgconfig
   else
-    $(info Mac, assumed python3, anaconda branch)
+    $(info Mac, 	assumed python3, anaconda branch)
     MOC =moc
   endif
   PKG   =pkg-config
